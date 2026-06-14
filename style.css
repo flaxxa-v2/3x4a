@@ -1,0 +1,219 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(145deg, #4a0000 0%, #8b0000 40%, #d11a1a 100%);
+    font-family: 'Segoe UI', 'Inter', system-ui, sans-serif;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    color: white;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.top-bar {
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(12px);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    border-bottom: 1px solid rgba(255, 160, 160, 0.3);
+}
+
+.logo-area h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ffd0b0, #ffe0c0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.action-btn {
+    background: rgba(20, 20, 30, 0.7);
+    border: none;
+    padding: 8px 18px;
+    border-radius: 40px;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.action-btn:hover {
+    background: #e03a3a;
+    transform: scale(0.97);
+}
+
+.nav-tabs {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    display: flex;
+    padding: 8px 24px;
+    gap: 6px;
+    border-bottom: 1px solid rgba(255,255,200,0.2);
+}
+
+.tab-btn {
+    background: transparent;
+    border: none;
+    padding: 8px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffdddd;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+.tab-btn.active {
+    background: #c92a2a;
+    color: white;
+    box-shadow: 0 2px 12px rgba(200,30,30,0.5);
+}
+
+.workspace {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    padding: 12px;
+    gap: 12px;
+    min-height: 0;
+}
+
+.sidebar {
+    width: 280px;
+    background: rgba(10, 5, 5, 0.5);
+    backdrop-filter: blur(12px);
+    border-radius: 28px;
+    padding: 16px 12px;
+    overflow-y: auto;
+    border: 1px solid rgba(255,180,180,0.25);
+}
+
+.category-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #ff7a5c;
+    margin-bottom: 12px;
+}
+
+.icon-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.app-card {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    border-radius: 20px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid rgba(255,100,100,0.4);
+    font-weight: 500;
+    font-size: 0.85rem;
+    min-width: 80px;
+    text-align: center;
+}
+
+.app-card:hover {
+    background: #e63946;
+    transform: translateY(-2px);
+}
+
+.iframe-panel {
+    flex: 1;
+    background: #1e1a1a;
+    border-radius: 28px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255,255,200,0.3);
+    resize: both;
+    min-width: 280px;
+    min-height: 300px;
+}
+
+.iframe-header {
+    background: #2c1a1a;
+    padding: 8px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #b33;
+}
+
+.close-iframe {
+    background: #922;
+    border: none;
+    color: white;
+    border-radius: 30px;
+    padding: 4px 12px;
+    cursor: pointer;
+}
+
+iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: white;
+}
+
+.browser-bar {
+    background: #0f0e0ecc;
+    padding: 8px 12px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.browser-url {
+    flex: 1;
+    background: #fff1f0;
+    border: none;
+    border-radius: 60px;
+    padding: 8px 16px;
+    color: #111;
+    outline: none;
+}
+
+.browser-go {
+    background: #e34d4d;
+    border: none;
+    padding: 6px 20px;
+    border-radius: 40px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.resize-note {
+    font-size: 10px;
+    background: #222;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-right: 8px;
+}
+
+@media (max-width: 780px) {
+    .sidebar { width: 240px; }
+    .workspace { flex-direction: column; }
+    .sidebar { width: 100%; max-height: 180px; overflow-x: auto; }
+    .icon-grid { flex-wrap: nowrap; }
+}
