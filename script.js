@@ -11,11 +11,10 @@ const GAMES = [
 
 const APPS = [
     { name: '🎬 YouTube', target: 'https://www.youtube.com/embed/videoseries?list=RDMM' },
-    { name: '🐦 X (Twitter)', target: 'https://xcancel.com/' },
+    { name: '🐦 X', target: 'https://xcancel.com/' },
     { name: '📸 Instagram', target: 'https://www.instagram.com/p/C2JXU-1oQWd/embed/captioned' },
     { name: '🎵 Spotify', target: 'https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M' },
-    { name: '📹 TikTok', target: 'https://www.tiktok.com/embed/v2/7123456789012345678' },
-    { name: '📘 Facebook', target: 'https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook' }
+    { name: '📹 TikTok', target: 'https://www.tiktok.com/embed/v2/7123456789012345678' }
 ];
 
 let activeTab = 'games';
@@ -34,8 +33,6 @@ function loadContent(targetUrl, title) {
     currentIframeUrl = proxied;
     mainFrame.src = proxied;
     activeTitleSpan.innerText = title || 'Loading...';
-    
-    // remove browser bar if present
     const bar = document.getElementById('browserControlBar');
     if (bar) bar.remove();
 }
@@ -66,15 +63,13 @@ function renderSidebar() {
     else if (activeTab === 'browser') {
         sidebarDiv.innerHTML = `
             <div class="category-title">🌐 PROXY BROWSER</div>
-            <div style="margin-bottom: 12px; font-size:0.8rem;">🔒 All traffic routes through proxy - no filters can see destination</div>
+            <div style="margin-bottom: 14px; font-size:0.7rem;">🔒 All requests go through proxy</div>
             <div style="display: flex; gap: 8px; flex-wrap:wrap;">
                 <button class="app-card" id="browserGoogle">Google</button>
                 <button class="app-card" id="browserYT">YouTube</button>
                 <button class="app-card" id="browserReddit">Reddit</button>
             </div>
         `;
-        
-        // inject browser bar into iframe header area
         if (!document.getElementById('browserControlBar')) {
             const bar = document.createElement('div');
             bar.id = 'browserControlBar';
@@ -84,9 +79,9 @@ function renderSidebar() {
                 <button id="browserGoBtn" class="browser-go">Go 🔍</button>
             `;
             document.querySelector('.iframe-header').after(bar);
-            
             document.getElementById('browserGoBtn').addEventListener('click', () => {
                 let query = document.getElementById('browserUrlInput').value.trim();
+                if (!query) return;
                 if (query.includes('.') && !query.includes(' ')) {
                     let url = query.startsWith('http') ? query : 'https://' + query;
                     loadContent(url, 'Browser');
@@ -95,7 +90,6 @@ function renderSidebar() {
                 }
             });
         }
-        
         document.getElementById('browserGoogle')?.addEventListener('click', () => loadContent('https://www.google.com', 'Google'));
         document.getElementById('browserYT')?.addEventListener('click', () => loadContent('https://www.youtube.com', 'YouTube'));
         document.getElementById('browserReddit')?.addEventListener('click', () => loadContent('https://www.reddit.com', 'Reddit'));
@@ -112,13 +106,13 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     });
 });
 
-// UI Controls
+// Buttons
 document.getElementById('resetIframeBtn').addEventListener('click', () => {
     const panel = document.getElementById('iframePanel');
     panel.style.width = '';
     panel.style.height = '';
+    panel.style.resize = 'both';
 });
-
 document.getElementById('fullViewBtn').addEventListener('click', () => {
     const panel = document.getElementById('iframePanel');
     panel.style.position = 'fixed';
@@ -128,24 +122,40 @@ document.getElementById('fullViewBtn').addEventListener('click', () => {
     panel.style.height = '100vh';
     panel.style.zIndex = '1000';
     panel.style.borderRadius = '0';
+    panel.style.resize = 'none';
     const exit = document.createElement('button');
-    exit.innerText = 'Exit Full';
+    exit.innerText = '✕ Exit Full';
     exit.style.position = 'fixed';
     exit.style.bottom = '20px';
     exit.style.right = '20px';
     exit.style.zIndex = '1001';
-    exit.style.background = 'red';
-    exit.style.padding = '8px 16px';
-    exit.style.borderRadius = '30px';
-    exit.onclick = () => { panel.style.position = ''; panel.style.width = ''; panel.style.height = ''; panel.style.borderRadius = '28px'; exit.remove(); };
+    exit.style.background = '#d33';
+    exit.style.color = 'white';
+    exit.style.border = 'none';
+    exit.style.padding = '8px 20px';
+    exit.style.borderRadius = '40px';
+    exit.style.fontWeight = 'bold';
+    exit.style.cursor = 'pointer';
+    exit.onclick = () => {
+        panel.style.position = '';
+        panel.style.top = '';
+        panel.style.left = '';
+        panel.style.width = '';
+        panel.style.height = '';
+        panel.style.zIndex = '';
+        panel.style.borderRadius = '32px';
+        panel.style.resize = 'both';
+        exit.remove();
+    };
     document.body.appendChild(exit);
 });
-
 document.getElementById('closeIframeBtn').addEventListener('click', () => {
     mainFrame.src = 'about:blank';
     activeTitleSpan.innerText = 'Idle';
+    const bar = document.getElementById('browserControlBar');
+    if (bar) bar.remove();
 });
 
-// Initial load
+// Start
 renderSidebar();
 loadContent('https://basketbros.io/embed/', 'BasketBros');
